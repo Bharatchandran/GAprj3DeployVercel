@@ -1,0 +1,98 @@
+{% extends 'base.html'%}
+{% load crispy_forms_tags %}
+{% load tailwind_filters %}
+{% block content%}
+<div class="hidden xl:block xl:col-span-2 mt-5 ml-5">
+    <div class="w-[355px] flex flex-col gap-5 sticky top-[8rem] bottom-0 left-3">
+        <div class="row-span-2 min-w-fit ">
+            <div class="w-[355px] p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8  dark:bg-gray-800 dark:border-gray-700">
+                    <h5 class="mb-2 text-5xl font-bold text-gray-900 capitalize dark:text-white">{{ group.name }}</h5>
+                    <a class="btn btn-wide btn-sm  m-3 btn-warning" href="{% url 'group_update' group.id %}">Edit</a>
+                    <a class="btn btn-wide btn-sm btn-error" href="{% url 'group_delete' group.id %}">Delete</a> 
+            </div>
+        </div>
+        <div class="mt-3 ml-5">
+            <h1 class="text-3xl font-bold ">Code of Conduct</h1>
+            <ol class="mt-5 text-lg">
+                <li class="flex items-center">
+                    <svg class="w-3.5 h-3.5 mr-2 text-green-500 dark:text-green-400 flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                     </svg>
+                     Be civil and respectful
+                </li>
+                <li class="flex items-center">
+                    <svg class="w-3.5 h-3.5 mr-2 text-green-500 dark:text-green-400 flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                     </svg>
+                     Posts must be related to the interest
+                </li>
+                <li class="flex items-center">
+                    <svg class="w-3.5 h-3.5 mr-2 text-green-500 dark:text-green-400 flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                     </svg>
+                     No advertising, sponsored content or marketing
+                </li>
+                <li class="flex items-center">
+                    <svg class="w-3.5 h-3.5 mr-2 text-green-500 dark:text-green-400 flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                     </svg>
+                     No hate speech
+                </li> 
+            </ol>
+        </div>
+        <div class="ml-5 ">
+            <h1 class="text-4xl font-bold">Topics List</h1>
+            {%for topic in topics %}
+                <ol class="max-w-md space-y-1 text-lg text-black list-disc list-inside dark:text-gray-400 mt-2" >
+                    <li><a href="{% url 'topic_detail' topic.id %}">{{topic.name}}</a></li>
+                </ol>
+            {%endfor%}
+        </div>
+    </div>
+</div>
+<div class="col-start-2 col-span-8 xl:col-start-4 xl:col-span-6 mt-10">
+    <div class="max-w-4xl">
+        
+        <form class="m-10 mr-0 flex flex-col" action="{% url 'topic_create' group.id %}" enctype="multipart/form-data" method="POST" >
+            {% csrf_token %}
+            <!-- {{ topic_form|crispy }} -->
+            <label for="default-input" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white">Topic:</label>
+            
+            <input type="text" name="name" id="default-input" class="bg-gray-50 mb-3  outline-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <div class="flex items-center justify-between px-3 py-2 ">
+                <button type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
+                    Post Topic
+                </button>
+            </div>
+            <!-- <input class="btn btn-wide self-end btn-outline btn-success" type="submit" value="Submit" class="btn"> -->
+        </form>
+    </div>
+    {% for topic in topics %}
+        <div class="max-w-4xl p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 ml-10 mb-5 dark:bg-gray-800 dark:border-gray-700  bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 relative ">
+            <a href="{% url 'topic_detail' topic.id %}">
+            <h2 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">"{{topic.name}}"</h2>
+                <h1 class="text-sm italic font-bold">{{topic.createdAt}}</h1>
+                
+                </a>
+                {%if topic.owner_id == user_id%}
+                <div class="flex flex-col h-5/6 justify-between absolute top-0 right-0">
+                    <div class="dropdown dropdown-end ">
+                        <label tabindex="0" class="btn bg-white  dark:bg-gray-800 border-0 bg- m-1"><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
+                            <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
+                        </svg></label>
+                        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                            <li>
+                                <a href="{% url 'topic_update' topic.id %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'topic_delete' topic.id %}" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                {%endif%}
+            </div> 
+    {% endfor %}
+        </div> 
+</div>
+{% endblock %}

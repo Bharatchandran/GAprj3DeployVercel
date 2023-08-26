@@ -1,0 +1,8 @@
+body {
+    min-height: 100vh;
+}
+
+/* dont think we need this  */
+#bg-summit{
+    background-image: url(https://i.imgur.com/w4RtIP7.jpeg);
+}
